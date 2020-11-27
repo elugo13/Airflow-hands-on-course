@@ -24,32 +24,32 @@ with DAG('store_dag', default_args=default_args, schedule_interval='@daily', tem
     # command = 'shasum ~/store_files_airflow/raw_store_transactions.csv'
     # t1 = BashOperator(task_id='check_file_exists', bash_command=command, retries=2, retry_delay=timedelta(seconds=15))
 
-    # t1 = FileSensor(
-    #     task_id='check_file_exists',
-    #     filepath='/usr/local/airflow/store_files_airflow/raw_store_transactions.csv',
-    #     fs_conn_id='fs_default',
-    #     poke_interval=10,
-    #     timeout=150,
-    #     soft_fail=True
-    # )
+    t1 = FileSensor(
+        task_id='check_file_exists',
+        filepath='/usr/local/airflow/store_files_airflow/raw_store_transactions.csv',
+        fs_conn_id='fs_default',
+        poke_interval=10,
+        timeout=150,
+        soft_fail=True
+    )
 
-    # t2 = PythonOperator(task_id='clean_raw_csv', python_callable=data_cleaner)
+    t2 = PythonOperator(task_id='clean_raw_csv', python_callable=data_cleaner)
 
-    # t3 = MySqlOperator(task_id='create_mysql_table', mysql_conn_id='mysql_conn', sql='create_table.sql')
+    t3 = MySqlOperator(task_id='create_mysql_table', mysql_conn_id='mysql_conn', sql='create_table.sql')
 
-    # t4 = MySqlOperator(task_id='insert_into_table', mysql_conn_id='mysql_conn', sql='insert_into_table.sql')
+    t4 = MySqlOperator(task_id='insert_into_table', mysql_conn_id='mysql_conn', sql='insert_into_table.sql')
 
-    # t5 = MySqlOperator(task_id='select_from_table', mysql_conn_id='mysql_conn', sql='select_from_table.sql')
+    t5 = MySqlOperator(task_id='select_from_table', mysql_conn_id='mysql_conn', sql='select_from_table.sql')
     
-    # original_file_path_1 = '~/store_files_airflow/location_wise_profit.csv'
+    original_file_path_1 = '~/store_files_airflow/location_wise_profit.csv'
     renamed_file_path_1 = f'~/store_files_airflow/location_wise_profit_{yesterday_date}.csv'
-    # command = f'mv {original_file_path_1} {renamed_file_path_1}'
-    # t6 = BashOperator(task_id='move_file_1', bash_command=command)
+    command = f'mv {original_file_path_1} {renamed_file_path_1}'
+    t6 = BashOperator(task_id='move_file_1', bash_command=command)
 
-    # original_file_path_2 = '~/store_files_airflow/store_wise_profit.csv'
+    original_file_path_2 = '~/store_files_airflow/store_wise_profit.csv'
     renamed_file_path_2 = f'~/store_files_airflow/store_wise_profit_{yesterday_date}.csv'
-    # command = f'mv {original_file_path_2} {renamed_file_path_2}'
-    # t7 = BashOperator(task_id='move_file_2', bash_command=command)
+    command = f'mv {original_file_path_2} {renamed_file_path_2}'
+    t7 = BashOperator(task_id='move_file_2', bash_command=command)
 
     renamed_file_path_1 = renamed_file_path_1.replace('~','/usr/local/airflow')
     renamed_file_path_2 = renamed_file_path_2.replace('~','/usr/local/airflow')
