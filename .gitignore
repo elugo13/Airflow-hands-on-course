@@ -127,4 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# User
 docker-compose.yml
+**/store_files/*[0-9].csv
+**/store_files/clean*.csv
