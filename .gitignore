@@ -132,3 +132,4 @@ dmypy.json
 docker-compose.yml
 **/store_files/*[0-9].csv
 **/store_files/clean*.csv
+**/.DS_Store
